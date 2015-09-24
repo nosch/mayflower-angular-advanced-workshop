@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>09 - Data Flow with Routing</title>
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="./../bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="./css/styles.css">
+    </head>
+    <body ng-cloak>
+        <div class="container" ng-controller="MainController as main">
+            <!-- App navigation -->
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <ul class="nav navbar-nav">
+                        <li ng-class="{active: main.state.includes('{{item.state}}')}"
+                            ng-repeat="item in main.navItems">
+                            <a ui-sref="{{item.sref}}">{{item.title}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- App header -->
+            <div class="page-header">
+                <h1 class="h1">AngularJS Workshop <small>{{main.appTitle}}</small></h1>
+            </div>
+
+            <!-- App main container -->
+            <div class="row" ui-view></div>
+        </div>
+
+        <!-- JS -->
+        <script src="./../bower_components/angular/angular.js"></script>
+        <script src="./../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+
+        <script src="./app.js"></script>
+        <script src="./services/item-store.js"></script>
+        <script src="./services/filter-types.js"></script>
+        <script src="./services/filter.js"></script>
+        <script src="./controllers/main.js"></script>
+
+        <script src="./modules/info/info.app.js"></script>
+        <script src="./modules/info/controllers/info.js"></script>
+        <script src="./modules/info/info-help.app.js"></script>
+        <script src="./modules/info/info-contact.app.js"></script>
+
+        <script src="./modules/todo-form/todo-form.app.js"></script>
+        <script src="./modules/todo-form/controllers/form.js"></script>
+
+        <script src="./modules/todo-filter/todo-filter.app.js"></script>
+        <script src="./modules/todo-filter/controllers/filter.js"></script>
+
+        <script src="./modules/todo-list/todo-list.app.js"></script>
+        <script src="./modules/todo-list/controllers/list.js"></script>
+
+        <script src="./modules/todo-stats/todo-stats.app.js"></script>
+        <script src="./modules/todo-stats/controllers/stats.js"></script>
+
+        <script src="./modules/todo-status/todo-status.app.js"></script>
+        <script src="./modules/todo-status/directives/status-bar.js"></script>
+        <script src="./modules/todo-status/controllers/status.js"></script>
+    </body>
+</html>

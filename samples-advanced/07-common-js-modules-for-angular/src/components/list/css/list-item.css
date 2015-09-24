@@ -1,0 +1,7 @@
+.open {
+    text-decoration: none;
+}
+
+.completed {
+    text-decoration: line-through;
+}

@@ -1,0 +1,13 @@
+<ol ng-show="ctrl.getItems().length">
+    <x-list-item ng-repeat="item in ctrl.getItems({query: ctrl.getFilter()}) track by $index"
+                 item-data="item"></x-list-item>
+</ol>
+
+<p ng-hide="ctrl.getItems().length">
+    <strong>Nothing to do!</strong>
+</p>
+
+<p ng-hide="ctrl.getItems({query: ctrl.getFilter()}).length || !ctrl.getItems().length">
+    <strong>No matches for this filter!</strong>
+</p>
+

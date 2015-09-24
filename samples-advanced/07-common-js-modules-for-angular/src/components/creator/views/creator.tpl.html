@@ -1,0 +1,11 @@
+<form>
+    <input type="text"
+           placeholder="New todo..."
+           ng-model="ctrl.text"
+           ng-keyup="ctrl.onEnter($event)"
+           ng-trim="true" />
+
+    <button type="button"
+            ng-click="ctrl.onAdd()"
+            ng-disabled="!ctrl.text">Add</button>
+</form>

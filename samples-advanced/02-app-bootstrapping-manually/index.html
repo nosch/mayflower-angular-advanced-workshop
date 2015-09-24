@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>02 - App Bootstrapping - manually</title>
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="./../bower_components/bootstrap/dist/css/bootstrap.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-header">
+                <h1 class="h1">AngularJS Workshop <small>App bootstrapping - manually</small></h1>
+            </div>
+
+            <!-- Angular app 1 -->
+            <div id="firstApp" class="panel panel-default" ng-controller="AppController as main">
+                <div class="panel-heading">
+                    <h1 class="panel-title">Eine AngularJS-App</h1>
+                </div>
+                <div class="panel-body">
+                    {{main.text}}{{main.version}}
+                </div>
+            </div>
+
+            <!-- Angular app 2 -->
+            <div id="secondApp" class="panel panel-default" ng-controller="AppController as main">
+                <div class="panel-heading">
+                    <h1 class="panel-title">Eine weitere AngularJS-App</h1>
+                </div>
+                <div class="panel-body">
+                    {{main.text}}{{main.version}}
+                </div>
+            </div>
+
+        </div>
+
+        <!-- JS -->
+        <script src="./../bower_components/angular/angular.js"></script>
+        <script>
+            'use strict';
+
+            angular.module('myFirstApp', [])
+                    .controller('AppController', function () {
+                        this.text = 'Diese App nutzt die Angular-Version ';
+                        this.version = angular.version.full;
+                    });
+
+            angular.module('mySecondApp', [])
+                    .controller('AppController', function () {
+                        this.text = 'Auch diese App nutzt die Angular-Version ';
+                        this.version = angular.version.full;
+                    });
+
+            angular.element(document).ready(function() {
+                angular.bootstrap(document.getElementById('firstApp'), ['myFirstApp']);
+                angular.bootstrap(document.getElementById('secondApp'), ['mySecondApp']);
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,13 @@
+<span>Show items: </span>
+
+<selector-button label="all"
+                 on-click="ctrl.onSelectFilter(ctrl.filters.ALL_ITEMS)"
+                 is-disabled="ctrl.filterIsActive(ctrl.filters.ALL_ITEMS)"></selector-button>
+
+<selector-button label="open"
+                 on-click="ctrl.onSelectFilter(ctrl.filters.OPEN_ITEMS)"
+                 is-disabled="ctrl.filterIsActive(ctrl.filters.OPEN_ITEMS)"></selector-button>
+
+<selector-button label="completed"
+                 on-click="ctrl.onSelectFilter(ctrl.filters.COMPLETED_ITEMS)"
+                 is-disabled="ctrl.filterIsActive(ctrl.filters.COMPLETED_ITEMS)"></selector-button>

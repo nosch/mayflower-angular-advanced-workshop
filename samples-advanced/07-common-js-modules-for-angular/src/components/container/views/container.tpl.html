@@ -1,0 +1,18 @@
+<section ng-class="ctrl.styles.layout">
+    <h2 ng-class="ctrl.styles.heading">{{ctrl.heading}}</h2>
+
+    <x-selector data-ng-class="ctrl.styles.section"
+                data-no-filter="ctrl.noActiveFilter()"
+                data-active-filter="ctrl.store.getActiveFilterType()"
+                data-set-filter="ctrl.store.setFilter(type)"></x-selector>
+
+
+
+    <x-creator ng-class="ctrl.styles.section"
+               add-item="ctrl.store.addItem(text)"
+               set-filter="ctrl.store.setFilter()"></x-creator>
+
+    <x-list ng-class="ctrl.styles.section"
+            get-items="ctrl.store.getItems(query)"
+            get-filter="ctrl.store.getFilter()"></x-list>
+</section>

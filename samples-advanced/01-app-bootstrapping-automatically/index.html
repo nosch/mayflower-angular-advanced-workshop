@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="app">
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>01 - App Bootstrapping - automatically</title>
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="./../bower_components/bootstrap/dist/css/bootstrap.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-header">
+                <h1 class="h1">AngularJS Workshop <small>App bootstrapping - {{'automatically' | uppercase}}</small></h1>
+            </div>
+
+            <div class="panel panel-default" ng-controller="MainCtrl as main">
+                <div class="panel-heading">
+                    <h1 class="panel-title">AngularJS - es funktioniert!</h1>
+                </div>
+                <div class="panel-body">
+                    {{main.text}}{{main.version}}
+                </div>
+            </div>
+        </div>
+
+        <!-- JS -->
+        <script src="./../bower_components/angular/angular.js"></script>
+        <script>
+            angular.module('app', [])
+                    .controller('MainCtrl', function () {
+                        this.text = 'Wir nutzen die Version ';
+                        this.version = angular.version.full;
+                    });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "AngularJS-Workshop-II",
+  "version": "0.0.1",
+  "description": "Sample code for the AngularJS workshop at Mayflower - Advanced.",
+  "scripts": {
+    "start": "http-server -s -o -p 3333 -a localhost",
+    "proxy": "http-server -s -o -p 3333 -a localhost -P http://localhost:3000"
+  },
+  "author": "nosch <norbert.schmidt@mayflower.de>",
+  "license": "MIT",
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "http-server": "0.8.1",
+    "time-grunt": "latest",
+    "load-grunt-tasks": "latest",
+    "grunt-usemin": "latest",
+    "grunt-html2js": "latest",
+    "grunt-contrib-cssmin": "latest",
+    "grunt-contrib-clean": "latest",
+    "grunt-contrib-copy": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-ng-annotate": "latest"
+  }
+}

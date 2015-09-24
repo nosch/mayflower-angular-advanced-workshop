@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>08 - Data Flow with Services</title>
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="./../bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="./css/styles.css">
+    </head>
+    <body ng-cloak>
+        <div class="container" ng-controller="MainController as main">
+            <!-- App navigation -->
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">Info</a></li>
+                        <li><a href="#">Kontakt</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- App header -->
+            <div class="page-header">
+                <h1 class="h1">AngularJS Workshop <small>{{main.appTitle}}</small></h1>
+            </div>
+
+            <!-- App main container -->
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+
+                                <!-- Search form -->
+                                <div class="col-md-6" ng-controller="FormController as todoForm">
+                                    <form>
+                                        <div class="input-group">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="newTodo"
+                                                   placeholder="Neue Aufgabe..."
+                                                   ng-model="todoForm.text"
+                                                   ng-keyup="todoForm.onEnter($event)"
+                                                   ng-trim="true" />
+                                            <span class="input-group-btn">
+                                                <button type="button"
+                                                    class="btn btn-default"
+                                                    ng-click="todoForm.onAdd()"
+                                                    ng-disabled="!todoForm.text">Speichern</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- Filter Buttons -->
+                                <div class="col-md-6" ng-controller="FilterController as filter">
+                                    <div class="form-inline">
+                                        <label>Zeige: </label>
+                                        <span class="btn-group">
+                                            <button type="button"
+                                                    class="btn btn-default"
+                                                    ng-click="filter.onSelectFilter(filter.filterTypes.ALL_ITEMS)"
+                                                    ng-disabled="filter.filterIsActive(filter.filterTypes.ALL_ITEMS)">alle</button>
+                                            <button type="button"
+                                                    class="btn btn-default"
+                                                    ng-click="filter.onSelectFilter(filter.filterTypes.COMPLETED_ITEMS)"
+                                                    ng-disabled="filter.filterIsActive(filter.filterTypes.COMPLETED_ITEMS)">erledigt</button>
+                                            <button type="button"
+                                                    class="btn btn-default"
+                                                    ng-click="filter.onSelectFilter(filter.filterTypes.OPEN_ITEMS)"
+                                                    ng-disabled="filter.filterIsActive(filter.filterTypes.OPEN_ITEMS)">offen</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Item list -->
+                        <div class="panel-body" ng-controller="ListController as list">
+                            <p ng-hide="list.getList().length"><strong>Noch nichts zu tun?</strong></p>
+                            <p ng-hide="result.length || !list.getList().length"><strong>Keine Treffer für diese Auswahl!</strong></p>
+
+                            <section ng-show="list.getList().length">
+                                <ul class="list-group">
+                                    <li class="list-group-item"
+                                        ng-repeat="item in list.getList() | filter:list.getFilter() as result track by $index">
+                                        <span ng-style="list.setStyle(item)">{{item.text}}</span>
+                                        <input class="pull-right"
+                                               type="checkbox"
+                                               ng-checked="item.completed"
+                                               ng-click="list.onToggleStatus(item)" />
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
+
+                        <!-- Status bar -->
+                        <div class="panel-footer" ng-controller="StatusController as status">
+                            <x-status-bar data-label="{{status.label}}" data-message="{{status.message}}"></x-status-bar>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats panel-->
+                <div class="col-md-4">
+                    <div class="panel panel-default" ng-controller="StatsController as stats">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Aufgaben (Übersicht)</h2>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <span class="badge">{{stats.total.length}}</span>
+                                    <span>Gesamt:</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="badge">{{stats.completed.length}}</span>
+                                    <span>Erledigt:</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="badge">{{stats.open.length}}</span>
+                                    <span>Offen:</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JS -->
+        <script src="./../bower_components/angular/angular.js"></script>
+
+        <script src="./app.js"></script>
+        <script src="./services/item-store.js"></script>
+        <script src="./services/filter-types.js"></script>
+        <script src="./services/filter.js"></script>
+        <script src="./controllers/main.js"></script>
+
+        <script src="./modules/todo-form/todo-form.app.js"></script>
+        <script src="./modules/todo-form/controllers/form.js"></script>
+
+        <script src="./modules/todo-filter/todo-filter.app.js"></script>
+        <script src="./modules/todo-filter/controllers/filter.js"></script>
+
+        <script src="./modules/todo-list/todo-list.app.js"></script>
+        <script src="./modules/todo-list/controllers/list.js"></script>
+
+        <script src="./modules/todo-stats/todo-stats.app.js"></script>
+        <script src="./modules/todo-stats/controllers/stats.js"></script>
+
+        <script src="./modules/todo-status/todo-status.app.js"></script>
+        <script src="./modules/todo-status/directives/status-bar.js"></script>
+        <script src="./modules/todo-status/controllers/status.js"></script>
+
+    </body>
+</html>

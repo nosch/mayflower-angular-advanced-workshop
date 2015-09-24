@@ -1,0 +1,24 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">{{todoForm.title}}</h2>
+    </div>
+    <div class="panel-body">
+        <form>
+            <div class="input-group">
+                <input type="text"
+                       class="form-control"
+                       id="newTodo"
+                       placeholder="Neue Aufgabe..."
+                       ng-model="todoForm.item.text"
+                       ng-keyup="todoForm.onEnter($event)"
+                       ng-trim="true" />
+                <span class="input-group-btn">
+                    <button type="button"
+                            class="btn btn-default"
+                            ng-click="todoForm.onSave()"
+                            ng-disabled="!todoForm.item.text">Speichern</button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>

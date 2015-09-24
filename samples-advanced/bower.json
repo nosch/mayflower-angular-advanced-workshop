@@ -1,0 +1,14 @@
+{
+  "name": "AngularJS-Workshop-II",
+  "version": "0.0.1",
+  "authors": [
+    "Norbert Schmidt <norbert.schmidt@mayflower.de>"
+  ],
+  "description": "Sample code for the AngularJS workshop at Mayflower - Advanced.",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "1.4.6",
+    "angular-ui-router": "0.2.15",
+    "bootstrap": "3.3.5"
+  }
+}
