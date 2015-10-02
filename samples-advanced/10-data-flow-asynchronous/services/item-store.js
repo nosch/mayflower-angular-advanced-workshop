@@ -1,88 +1,91 @@
-'use strict';
+(function (angular) {
+    'use strict';
 
-angular.module('todoApp')
-    .factory('itemStoreService', function (itemResourceService) {
-        var _items = [];
-        var _completedItems = [];
-        var _openItems = [];
+    angular.module('todoApp')
+        .factory('itemStoreService', itemStoreService);
 
-        var _loadFromResource = function () {
-            itemResourceService.getAll(function (response) {
-                response.data.map(function (item) {
-                    _items.push(item);
-                    _setFilteredItems(item);
-                });
-            });
+    itemStoreService.$inject = ['itemResourceService'];
+
+    function itemStoreService(itemResourceService) {
+        var items = [];
+        var completedItems = [];
+        var openItems = [];
+
+        return {
+            init: loadFromResource,
+            create: create,
+            getAll: get,
+            updateItem: update,
+            getCompleted: function () {
+                return completedItems;
+            },
+            getOpen: function () {
+                return openItems;
+            }
         };
 
-        var _getItemIndexById = function (id) {
+        function loadFromResource() {
+            itemResourceService.getAll(function (response) {
+                response.data.map(function (item) {
+                    items.push(item);
+                    setFilteredItems(item);
+                });
+            });
+        }
+
+        function getItemIndexById(id) {
             var itemIndex = -1;
 
-            _items.map(function (item, index) {
+            items.map(function (item, index) {
                 if (item.id === id) {
                     itemIndex = index;
                 }
             });
 
             return itemIndex;
-        };
+        }
 
-        var _setFilteredItems = function (item) {
+        function setFilteredItems(item) {
             if (item.completed === true) {
-                _completedItems.push(item);
+                completedItems.push(item);
             } else {
-                _openItems.push(item);
+                openItems.push(item);
             }
-        };
+        }
 
-        var _updateFilteredItems = function (item) {
+        function updateFilteredItems(item) {
             if (item.completed === true) {
-                _openItems.shift();
+                openItems.shift();
             } else {
-                _completedItems.shift();
+                completedItems.shift();
             }
 
-            _setFilteredItems(item);
-        };
+            setFilteredItems(item);
+        }
 
-        var _get = function () {
-            return _items;
-        };
+        function get() {
+            return items;
+        }
 
-        var _create = function (text) {
+        function create(text) {
             var item = {text: text, completed: false};
 
             itemResourceService.create(item, function (response) {
-                _items.unshift(response.data);
-                _setFilteredItems(response.data);
+                items.unshift(response.data);
+                setFilteredItems(response.data);
             });
 
-        };
+        }
 
-        var _update = function (item) {
-            var index = _getItemIndexById(item.id);
+        function update(item) {
+            var index = getItemIndexById(item.id);
 
             itemResourceService.update(item.id, item, function (response) {
                 if (index !== -1) {
-                    _items[index] = response.data;
-                    _updateFilteredItems(response.data)
+                    items[index] = response.data;
+                    updateFilteredItems(response.data)
                 }
             });
-        };
-
-        // Initial data call
-        _loadFromResource();
-
-        return {
-            create: _create,
-            getAll: _get,
-            updateItem: _update,
-            getCompleted: function () {
-                return _completedItems;
-            },
-            getOpen: function () {
-                return _openItems;
-            }
-        };
-    });
-
+        }
+    }
+}(angular));

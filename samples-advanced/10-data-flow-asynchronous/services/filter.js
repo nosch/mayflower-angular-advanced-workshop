@@ -1,37 +1,43 @@
-'use strict';
+(function (angular) {
+    'use strict';
 
-angular.module('todoApp')
-    .factory('filterService', function (filterTypes) {
-        var _filter = {};
-        var _activeFilter = filterTypes.ALL_ITEMS;
+    angular.module('todoApp')
+        .factory('filterService', filterService);
 
-        var _setFilter = function (filter) {
-            switch (filter) {
-                case filterTypes.ALL_ITEMS:
-                    _filter = {};
-                    _activeFilter = filter;
-                    break;
-                case filterTypes.OPEN_ITEMS:
-                    _filter = {completed: false};
-                    _activeFilter = filter;
-                    break;
-                case filterTypes.COMPLETED_ITEMS:
-                    _filter = {completed: true};
-                    _activeFilter = filter;
-                    break;
-                default:
-                    _filter = {};
-                    _activeFilter = filterTypes.ALL_ITEMS;
-            }
-        };
+    filterService.$inject = ['filterTypes'];
+
+    function filterService(filterTypes) {
+        var filter = {};
+        var activeFilter = filterTypes.ALL_ITEMS;
 
         return {
             getFilter: function () {
-                return _filter;
+                return filter;
             },
             getActiveFilter: function () {
-                return _activeFilter;
+                return activeFilter;
             },
-            setFilter: _setFilter
+            setFilter: setFilter
         };
-    });
+
+        function setFilter(filterType) {
+            switch (filterType) {
+                case filterTypes.ALL_ITEMS:
+                    filter = {};
+                    activeFilter = filterType;
+                    break;
+                case filterTypes.OPEN_ITEMS:
+                    filter = {completed: false};
+                    activeFilter = filterType;
+                    break;
+                case filterTypes.COMPLETED_ITEMS:
+                    filter = {completed: true};
+                    activeFilter = filterType;
+                    break;
+                default:
+                    filter = {};
+                    activeFilter = filterTypes.ALL_ITEMS;
+            }
+        }
+    }
+}(angular));

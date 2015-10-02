@@ -1,16 +1,24 @@
-'use strict';
+(function (angular) {
+    'use strict';
 
-angular.module('todoFilter')
-    .controller('FilterController', function (filterService, filterTypes) {
+    angular.module('todoFilter')
+        .controller('FilterController', FilterController);
+
+    FilterController.$inject = ['filterService', 'filterTypes'];
+
+    function FilterController(filterService, filterTypes) {
         var vm = this;
 
         vm.filterTypes = filterTypes;
+        vm.onSelectFilter = onSelectFilter;
+        vm.filterIsActive = filterIsActive;
 
-        vm.onSelectFilter = function (type) {
+        function onSelectFilter(type) {
             filterService.setFilter(type);
-        };
+        }
 
-        vm.filterIsActive = function (type) {
+        function filterIsActive(type) {
             return filterService.getActiveFilter() === type;
-        };
-    });
+        }
+    }
+}(angular));

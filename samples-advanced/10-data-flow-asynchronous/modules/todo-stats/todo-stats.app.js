@@ -1,3 +1,5 @@
-'use strict';
+(function (angular) {
+    'use strict';
 
-angular.module('todoStats', []);
+    angular.module('todoStats', []);
+}(angular));

@@ -1,3 +1,5 @@
-'use strict';
+(function (angular) {
+    'use strict';
 
-angular.module('todoFilter', []);
+    angular.module('todoFilter', []);
+}(angular));

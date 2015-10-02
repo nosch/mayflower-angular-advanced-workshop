@@ -1,25 +1,34 @@
-'use strict';
+(function (angular) {
+    'use strict';
 
-angular.module('todoForm')
-    .controller('FormController', function (itemStoreService, filterService) {
+    angular.module('todoForm')
+        .controller('FormController', FormController);
+
+    FormController.$inject = ['itemStoreService', 'filterService'];
+
+    function FormController(itemStoreService, filterService) {
         var vm = this;
 
-        var _add = function () {
+        vm.onEnter = onEnter;
+        vm.onAdd = onAdd;
+
+        function onEnter($event) {
+            if ($event.which === 13) {
+                add();
+            }
+        }
+
+        function onAdd() {
+            add();
+        }
+
+        function add() {
             if (vm.text) {
                 itemStoreService.create(vm.text);
                 filterService.setFilter();
             }
 
             vm.text = null;
-        };
-
-        vm.onEnter = function ($event) {
-            if ($event.which === 13) {
-                _add();
-            }
-        };
-
-        vm.onAdd = function () {
-            _add();
-        };
-    });
+        }
+    }
+}(angular));

@@ -1,31 +1,42 @@
-'use strict';
+(function (angular) {
+    'use strict';
 
-angular.module('todoList')
-    .controller('ListController', function (itemStoreService, filterService) {
+    angular.module('todoList')
+        .controller('ListController', ListController);
+
+    ListController.$inject = ['itemStoreService', 'filterService'];
+
+    function ListController(itemStoreService, filterService) {
         var vm = this;
 
-        var _setStatus = function (item) {
-            item.completed = !item.completed;
-            itemStoreService.updateItem(item);
-        };
+        vm.onToggleStatus = onToggleStatus;
+        vm.getList = getLIst;
+        vm.getFilter = getFilter;
+        vm.setStyle = setStyle;
 
-        vm.onToggleStatus = function (item) {
-            _setStatus(item);
-        };
+        function onToggleStatus(item) {
+            setStatus(item);
+        }
 
-        vm.getList = function () {
+        function getLIst() {
             return itemStoreService.getAll();
-        };
+        }
 
-        vm.getFilter = function () {
+        function getFilter() {
             return filterService.getFilter();
-        };
+        }
 
-        vm.setStyle = function (item) {
+        function setStyle(item) {
             return {
                 'text-decoration': (item.completed)
                     ? 'line-through'
                     : 'no-line-through'
             }
-        };
-    });
+        }
+
+        function setStatus(item) {
+            item.completed = !item.completed;
+            itemStoreService.updateItem(item);
+        }
+    }
+}(angular));
